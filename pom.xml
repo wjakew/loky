@@ -12,7 +12,7 @@
 	<artifactId>loky</artifactId>
 	<version>0.0.1</version>
 	<name>loky</name>
-	<description>Self-Hosted authorization solution for your internal apps</description>
+	<description>Self-Hosted, Open-Source authorization magic for your internal apps</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -56,6 +56,12 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
 			<version>5.3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20231013</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>

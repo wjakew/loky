@@ -9,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.jakubwawak.loky.database_engine.Database;
+import com.jakubwawak.loky.maintanance.ConsoleColors;
 import com.jakubwawak.loky.properties_engine.Properties;
 import com.vaadin.flow.spring.annotation.EnableVaadin;
 
@@ -20,6 +21,7 @@ import com.vaadin.flow.spring.annotation.EnableVaadin;
 public class LokyApplication {
 
 	public static String version = "0.0.1";
+	public static String build = "loky27022025REV1";
 
 	public static Properties properties;
 	public static Database database;
@@ -55,12 +57,14 @@ public class LokyApplication {
 	 * Shows the welcome screen.
 	 */
 	private static void showWelcomeScreen(){
+		System.out.print(ConsoleColors.BLUE_BOLD_BRIGHT);
 		System.out.println("Welcome to Loky");
-		System.out.println("Version: " + version);
+		System.out.println("Version: " + version + " (" + build + ")");
 		System.out.println("Author: Jakub Wawak");
 		System.out.println("Email: kubawawak@gmail.com");
 		System.out.println("All rights reserved");
 		System.out.println("--------------------------------");
+		System.out.print(ConsoleColors.RESET);
 	}
 
 }
