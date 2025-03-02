@@ -268,6 +268,30 @@ import java.util.UUID;
              System.out.println(ConsoleColors.RED_BRIGHT+"DB-LOG-ERROR"+"["+ LocalDateTime.now(ZoneId.of("Europe/Warsaw")).toString()+") - "+log_text+"]"+ConsoleColors.RESET);
          }
      }
+
+
+     /**
+      * Function for logging telemetry info
+      * @param telemetry_data
+      * @param telemetry_type
+      */
+     public void logTelemetryInfo(String telemetry_data, String telemetry_type){
+        try{
+            MongoCollection<Document> collection = mongoDatabase.getCollection("telemetry");
+            Document telemetryEntry = new Document("data", telemetry_data)
+                    .append("type", telemetry_type)
+                    .append("timestamp", LocalDateTime.now(ZoneId.of("Europe/Warsaw")));
+            InsertOneResult result = collection.insertOne(telemetryEntry);
+            if (result.getInsertedId() != null){
+                log("TELEMETRY-INFO", "Telemetry data logged (" + telemetry_data + ")");
+            }
+            else{
+                log("TELEMETRY-ERROR", "Failed to log telemetry data (result: "+result.toString()+")");
+            }
+        }catch(Exception ex){
+            log("TELEMETRY-ERROR", "Failed to log telemetry data (" + ex.toString() + ")");
+        }
+     }
  
      /**
       * Function for story log data

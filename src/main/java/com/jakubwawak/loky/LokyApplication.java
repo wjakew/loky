@@ -7,18 +7,23 @@ package com.jakubwawak.loky;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import com.jakubwawak.loky.database_engine.Database;
 import com.jakubwawak.loky.maintanance.ConsoleColors;
 import com.jakubwawak.loky.properties_engine.Properties;
+import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.spring.annotation.EnableVaadin;
+import com.vaadin.flow.theme.Theme;
+
 
 /**
  * LokyApplication is the main class for the Loky application.
  */
 @SpringBootApplication
 @EnableVaadin({"com.jakubwawak"})
-public class LokyApplication {
+@Theme(value = "loky")
+public class LokyApplication extends SpringBootServletInitializer implements AppShellConfigurator{
 
 	public static String version = "0.0.1";
 	public static String build = "loky27022025REV1";
