@@ -1,0 +1,31 @@
+/*global styles*/
+:root {
+    --primary-color: black; /* Example primary color */
+    --secondary-color: white; /* Example secondary color */
+}
+* {
+    font-family: monospace;
+}
+H1{
+    font-size: 5rem;
+    color: var(--secondary-color);
+}
+H6{
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+.welcome-page-icon{
+    font-size: 5rem;
+    color: var(--secondary-color);
+}
+/*page styles*/
+.page{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+/*button styles*/
+.button-primary{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}

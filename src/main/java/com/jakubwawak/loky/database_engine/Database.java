@@ -5,7 +5,8 @@
  */
 package com.jakubwawak.loky.database_engine;
 
- import com.jakubwawak.loky.maintanance.ConsoleColors;
+ import com.jakubwawak.loky.LokyApplication;
+import com.jakubwawak.loky.maintanance.ConsoleColors;
  import com.mongodb.*;
  import com.mongodb.client.MongoClient;
  import com.mongodb.client.MongoClients;
@@ -161,6 +162,34 @@ import java.util.UUID;
              return 1;
          }
          return 0;
+     }
+
+     /**
+      * Function for getting or creating loky configuration
+      * @return Document
+      */
+     public Document getOrCreateLokyConfiguration(){
+        try{
+            MongoCollection<Document> collection = getCollection("loky_configuration");
+            if (collection.countDocuments() == 0){
+                Document document = new Document();
+                document.put("loky_instance_name", "loky");
+                document.put("loky_instance_description", "Loky is a web application for managing your data.");
+                document.put("loky_instance_version", LokyApplication.version);
+                document.put("loky_instance_created_at", LocalDateTime.now(ZoneId.of("Europe/Warsaw")).toString());
+                collection.insertOne(document);
+                log("LOKY_CONFIGURATION-CREATED", "Created loky_configuration collection with default configuration.");
+                return document;
+            }
+            else{
+                Document document = collection.find().first();
+                log("LOKY_CONFIGURATION-FOUND", "Loky configuration found in database.");
+                return document;
+            }
+        }catch(Exception ex){
+            log("LOKY_CONFIGURATION-ERROR", "Failed to get or create loky configuration (" + ex.toString() + ")");
+            return null;
+        }
      }
 
      /**

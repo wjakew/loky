@@ -5,7 +5,12 @@
  */
 package com.jakubwawak.loky.web_server.pages.anonymous_access;
 
+import com.jakubwawak.loky.LokyApplication;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H6;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -30,15 +35,24 @@ public class WelcomePage extends VerticalLayout {
      * Constructor for the WelcomePage class.
      */
     public WelcomePage() {
+        addClassName("page");
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
         setSizeFull();
+
+        prepareHeader();
+        prepareMainContent();
     }
 
     /**
      * Function for preparing the header of the page.
      */
     void prepareHeader(){
+
+        admin_login_button = new Button("Admin Portal",VaadinIcon.KEY.create());
+        admin_login_button.addClassName("button-primary");
+
+
         header = new HorizontalLayout();
         header.setAlignItems(Alignment.CENTER);
         header.setJustifyContentMode(JustifyContentMode.CENTER);
@@ -50,16 +64,36 @@ public class WelcomePage extends VerticalLayout {
 
         FlexLayout header_left = new FlexLayout();
         header_left.setAlignItems(Alignment.START);
-        header_left.setJustifyContentMode(JustifyContentMode.CENTER);
+        header_left.setJustifyContentMode(JustifyContentMode.START);
         header_left.setWidth("80%");
-        header_left.setHeight("100%");
+        header_left.add(new H6(LokyApplication.loky_configuration.getString("loky_instance_name")+" ("+LokyApplication.build+")"));
 
         FlexLayout header_right = new FlexLayout();
         header_right.setAlignItems(Alignment.END);
-        header_right.setJustifyContentMode(JustifyContentMode.CENTER);
-        header_right.setHeight("100%");
+        header_right.setJustifyContentMode(JustifyContentMode.END);
+        header_right.add(admin_login_button);
 
         header.add(header_left);
         header.add(header_right);
+    }
+
+    /**
+     * Function for preparing the main content of the page.
+     */
+    void prepareMainContent(){
+        add(header);
+
+        VerticalLayout main_content = new VerticalLayout();
+        main_content.setAlignItems(Alignment.CENTER);
+        main_content.setJustifyContentMode(JustifyContentMode.CENTER);
+        main_content.setSizeFull();
+
+        H1 title = new H1("loky <3");
+        Icon icon = VaadinIcon.LOCK.create();
+        icon.addClassName("welcome-page-icon");
+
+        main_content.add(icon,title);
+
+        add(main_content);
     }
 }

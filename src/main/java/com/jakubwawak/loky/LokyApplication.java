@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.loky;
 
+import org.bson.Document;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -26,10 +27,11 @@ import com.vaadin.flow.theme.Theme;
 public class LokyApplication extends SpringBootServletInitializer implements AppShellConfigurator{
 
 	public static String version = "0.0.1";
-	public static String build = "loky27022025REV1";
+	public static String build = "loky03032025REV1";
 
 	public static Properties properties;
 	public static Database database;
+	public static Document loky_configuration;
 
 	/**
 	 * Main method for the Loky application.
@@ -45,6 +47,7 @@ public class LokyApplication extends SpringBootServletInitializer implements App
 			database.connect();
 			if ( database.connected ){
 				database.getOrCreateLokyAdminPassword();
+				loky_configuration = database.getOrCreateLokyConfiguration();
 				SpringApplication.run(LokyApplication.class, args);
 			}
 			else{
