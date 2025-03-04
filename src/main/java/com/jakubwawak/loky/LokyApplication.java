@@ -27,7 +27,7 @@ import com.vaadin.flow.theme.Theme;
 public class LokyApplication extends SpringBootServletInitializer implements AppShellConfigurator{
 
 	public static String version = "0.0.1";
-	public static String build = "loky03032025REV1";
+	public static String build = "loky04032025REV1";
 
 	public static Properties properties;
 	public static Database database;

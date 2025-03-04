@@ -6,6 +6,8 @@
 package com.jakubwawak.loky.web_server.pages.anonymous_access;
 
 import com.jakubwawak.loky.LokyApplication;
+import com.jakubwawak.loky.web_server.windows.AdminPasswordWindow;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H6;
@@ -49,7 +51,7 @@ public class WelcomePage extends VerticalLayout {
      */
     void prepareHeader(){
 
-        admin_login_button = new Button("Admin Portal",VaadinIcon.KEY.create());
+        admin_login_button = new Button("Admin Portal",VaadinIcon.KEY.create(),this::adminLoginButtonClick);
         admin_login_button.addClassName("button-primary");
 
 
@@ -95,5 +97,15 @@ public class WelcomePage extends VerticalLayout {
         main_content.add(icon,title);
 
         add(main_content);
+    }
+
+    /**
+     * Function for handling the admin login button click event.
+     * @param event
+     */
+    private void adminLoginButtonClick(ClickEvent<Button> event){
+        AdminPasswordWindow admin_password_window = new AdminPasswordWindow();
+        add(admin_password_window);
+        admin_password_window.open();
     }
 }
