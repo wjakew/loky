@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import com.jakubwawak.loky.database_engine.Database;
 import com.jakubwawak.loky.maintanance.ConsoleColors;
 import com.jakubwawak.loky.properties_engine.Properties;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.spring.annotation.EnableVaadin;
 import com.vaadin.flow.theme.Theme;
@@ -27,7 +28,7 @@ import com.vaadin.flow.theme.Theme;
 public class LokyApplication extends SpringBootServletInitializer implements AppShellConfigurator{
 
 	public static String version = "0.0.1";
-	public static String build = "loky04032025REV1";
+	public static String build = "loky10032025REV1";
 
 	public static Properties properties;
 	public static Database database;
@@ -73,6 +74,14 @@ public class LokyApplication extends SpringBootServletInitializer implements App
 		System.out.println("All rights reserved");
 		System.out.println("--------------------------------");
 		System.out.print(ConsoleColors.RESET);
+	}
+
+	/**
+	 * Shows a notification.
+	 * @param message
+	 */
+	public static void showNotification(String message){
+		Notification.show(message, 3000,Notification.Position.BOTTOM_CENTER);
 	}
 
 }

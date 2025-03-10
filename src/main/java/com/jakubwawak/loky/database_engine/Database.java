@@ -147,6 +147,77 @@ import java.util.UUID;
              return -1;
          }
      }
+
+     /**
+      * Function for creating admin cookie
+      * @return String
+      */
+     public String createAdminCookie(){
+        try{
+            MongoCollection<Document> collection = getCollection("admin_cookies");
+            Document document = new Document();
+            document.put("cookie_id", UUID.randomUUID().toString());
+            document.put("created_at", LocalDateTime.now(ZoneId.of("Europe/Warsaw")).toString());
+            InsertOneResult result = collection.insertOne(document);
+            if (result.getInsertedId() != null){
+                log("ADMIN-COOKIE-CREATED", "Admin cookie created (" + result.getInsertedId() + ")");
+                return result.getInsertedId().toString();
+            }
+            else{
+                log("ADMIN-COOKIE-ERROR", "Failed to create admin cookie");
+                return null;
+            }
+        }catch(Exception ex){
+            log("ADMIN-COOKIE-ERROR", "Failed to create admin cookie (" + ex.toString() + ")");
+            return null;
+        }
+     }
+
+    /**
+     * Function for verifying admin cookie
+     * @param cookie_id
+     * @return int
+     */
+    public int verifyAdminCookie(String cookie_id){
+        try{
+            MongoCollection<Document> collection = getCollection("admin_cookies");
+            Document document = collection.find(Filters.eq("cookie_id", cookie_id)).first();
+            if (document != null){
+                log("ADMIN-COOKIE-VERIFIED", "Admin cookie verified (" + cookie_id + ")");
+                return 1;
+            }
+            else{
+                log("ADMIN-COOKIE-ERROR", "Admin cookie not found (" + cookie_id + ")");
+                return 0;
+            }
+        }catch(Exception ex){
+            log("ADMIN-COOKIE-ERROR", "Failed to verify admin cookie (" + ex.toString() + ")");
+            return -1;
+        }
+    }
+
+    /**
+     * Function for removing admin cookie
+     * @param cookie_id
+     * @return int
+     */
+    public int removeAdminCookie(String cookie_id){
+        try{
+            MongoCollection<Document> collection = getCollection("admin_cookies");
+            DeleteResult result = collection.deleteOne(Filters.eq("cookie_id", cookie_id));
+            if (result.getDeletedCount() == 1){
+                log("ADMIN-COOKIE-REMOVED", "Admin cookie removed (" + cookie_id + ")");
+                return 1;
+            }
+            else{
+                log("ADMIN-COOKIE-ERROR", "Failed to remove admin cookie (" + cookie_id + ")");
+                return 0;
+            }
+        }catch(Exception ex){
+            log("ADMIN-COOKIE-ERROR", "Failed to remove admin cookie (" + ex.toString() + ")");
+            return -1;
+        }
+    }
  
      /**
       * Function for removing session

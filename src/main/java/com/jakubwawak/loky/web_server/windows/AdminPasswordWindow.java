@@ -9,6 +9,9 @@ package com.jakubwawak.loky.web_server.windows;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.server.VaadinSession;
+import com.jakubwawak.loky.LokyApplication;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H6;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
@@ -47,7 +50,6 @@ public class AdminPasswordWindow extends Dialog{
         content.setMargin(true);
 
         createContent();
-
         add(content);
     }
 
@@ -59,7 +61,7 @@ public class AdminPasswordWindow extends Dialog{
         password_field.setPlaceholder("secret password");
         password_field.setWidthFull();
 
-        unlock_button = new Button("Unlock",VaadinIcon.KEY.create());
+        unlock_button = new Button("Unlock",VaadinIcon.KEY.create(),this::unlockAction);
         unlock_button.setWidthFull();
         unlock_button.addClassName("button-primary-black");
 
@@ -67,6 +69,21 @@ public class AdminPasswordWindow extends Dialog{
         content.add(new H6("Admin Portal is Locked"));
         content.add(password_field);
         content.add(unlock_button);
+    }
 
+    /**
+     * Action for unlocking the admin portal
+     * @param event
+     */
+    private void unlockAction(ClickEvent<Button> event){
+        String password = password_field.getValue();
+        if (password.equals(LokyApplication.database.getOrCreateLokyAdminPassword())){
+            VaadinSession.getCurrent().getSession().setAttribute("admin_cookie", LokyApplication.database.createAdminCookie());
+            getUI().ifPresent(ui -> ui.navigate("/admin"));
+            close();
+        }
+        else{
+            password_field.setErrorMessage("Invalid password");
+        }
     }
 }
