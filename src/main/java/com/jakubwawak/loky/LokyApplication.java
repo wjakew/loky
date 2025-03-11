@@ -34,6 +34,8 @@ public class LokyApplication extends SpringBootServletInitializer implements App
 	public static Database database;
 	public static Document loky_configuration;
 
+	public static boolean debug = false;
+
 	/**
 	 * Main method for the Loky application.
 	 * @param args
@@ -49,7 +51,12 @@ public class LokyApplication extends SpringBootServletInitializer implements App
 			if ( database.connected ){
 				database.getOrCreateLokyAdminPassword();
 				loky_configuration = database.getOrCreateLokyConfiguration();
-				SpringApplication.run(LokyApplication.class, args);
+				if ( debug ){
+					new LokyApplicationTest();
+				}
+				else{
+					SpringApplication.run(LokyApplication.class, args);
+				}
 			}
 			else{
 				System.out.println("Failed to connect to database");

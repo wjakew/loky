@@ -3,7 +3,7 @@
  * kubawawak@gmail.com
  * all right reserved
  */
-package com.jakubwawak.loky.web_server.pages.locked_access;
+package com.jakubwawak.loky.web_server;
 
 import com.jakubwawak.loky.LokyApplication;
 import com.jakubwawak.loky.web_server.components.AppMenu;
@@ -21,16 +21,16 @@ import com.vaadin.flow.server.VaadinSession;
 /**
  * AdminPage is the page for the admin panel.
  */
-@PageTitle("Admin Panel")
-@Route(value = "admin",layout = AppMenu.class)
-public class AdminPage extends VerticalLayout {
+@PageTitle("Template")
+@Route(value = "template",layout = AppMenu.class)
+public class TemplatePageLogged extends VerticalLayout {
 
     Button returnButton;
 
     /**
      * Constructor for AdminPage
      */
-    public AdminPage(){
+    public TemplatePageLogged(){
         addClassName("page");
         setSizeFull();
         setAlignItems(Alignment.CENTER);

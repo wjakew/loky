@@ -14,6 +14,22 @@ H6{
     font-size: 1.5rem;
     color: var(--secondary-color);
 }
+vaadin-app-layout::part(navbar){
+    background-color: var(--primary-color);
+}
+vaadin-drawer-toggle::part(icon){
+    color: var(--secondary-color);
+}
+vaadin-app-layout::part(drawer){
+    background-color: var(--primary-color);
+}
+vaadin-side-nav-item::part(link){
+    color: var(--secondary-color);
+}
+vaadin-icon{
+    color: var(--secondary-color);
+}
+
 .welcome-page-icon{
     font-size: 5rem;
     color: var(--secondary-color);

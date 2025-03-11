@@ -161,7 +161,7 @@ import java.util.UUID;
             InsertOneResult result = collection.insertOne(document);
             if (result.getInsertedId() != null){
                 log("ADMIN-COOKIE-CREATED", "Admin cookie created (" + result.getInsertedId() + ")");
-                return result.getInsertedId().toString();
+                return document.getString("cookie_secret");
             }
             else{
                 log("ADMIN-COOKIE-ERROR", "Failed to create admin cookie");
