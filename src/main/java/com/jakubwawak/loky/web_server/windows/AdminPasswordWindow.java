@@ -78,11 +78,13 @@ public class AdminPasswordWindow extends Dialog{
     private void unlockAction(ClickEvent<Button> event){
         String password = password_field.getValue();
         if (password.equals(LokyApplication.database.getOrCreateLokyAdminPassword())){
-            VaadinSession.getCurrent().getSession().setAttribute("admin_cookie", LokyApplication.database.createAdminCookie());
+            LokyApplication.database.log("ADMIN_ACCESS", "Admin portal unlocked");
+            VaadinSession.getCurrent().setAttribute("admin_cookie", LokyApplication.database.createAdminCookie());
             getUI().ifPresent(ui -> ui.navigate("/admin"));
             close();
         }
         else{
+            LokyApplication.database.log("ADMIN_ACCESS_ATTEMPT", "Invalid admin password attempt (" + password + ")");
             password_field.setErrorMessage("Invalid password");
         }
     }

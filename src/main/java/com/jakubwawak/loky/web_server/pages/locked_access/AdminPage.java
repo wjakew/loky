@@ -6,6 +6,7 @@
 package com.jakubwawak.loky.web_server.pages.locked_access;
 
 import com.jakubwawak.loky.LokyApplication;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -32,9 +33,10 @@ public class AdminPage extends VerticalLayout {
      * Prepare the admin page
      */
     private void verifyAdminCookie(){
-        String adminCookie = VaadinSession.getCurrent().getSession().getAttribute("admin_cookie").toString();
+        String adminCookie = VaadinSession.getCurrent().getAttribute("admin_cookie").toString();
+        LokyApplication.database.log("ADMIN_ACCESS_ATTEMPT", "Admin portal access attempt (" + adminCookie + ")");
         if(adminCookie == null){
-            getUI().ifPresent(ui -> ui.navigate("/welcome"));
+            UI.getCurrent().navigate("/welcome");
             LokyApplication.showNotification("You are not authorized to access this page");
         }
         else{
@@ -42,7 +44,7 @@ public class AdminPage extends VerticalLayout {
                 prepareAdminPage();
             }
             else{
-                getUI().ifPresent(ui -> ui.navigate("/welcome"));
+                UI.getCurrent().navigate("/welcome");
                 LokyApplication.showNotification("You are not authorized to access this page");
             }
         }

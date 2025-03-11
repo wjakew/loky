@@ -156,7 +156,7 @@ import java.util.UUID;
         try{
             MongoCollection<Document> collection = getCollection("admin_cookies");
             Document document = new Document();
-            document.put("cookie_id", UUID.randomUUID().toString());
+            document.put("cookie_secret", UUID.randomUUID().toString());
             document.put("created_at", LocalDateTime.now(ZoneId.of("Europe/Warsaw")).toString());
             InsertOneResult result = collection.insertOne(document);
             if (result.getInsertedId() != null){
@@ -178,16 +178,16 @@ import java.util.UUID;
      * @param cookie_id
      * @return int
      */
-    public int verifyAdminCookie(String cookie_id){
+    public int verifyAdminCookie(String cookie_secret){
         try{
             MongoCollection<Document> collection = getCollection("admin_cookies");
-            Document document = collection.find(Filters.eq("cookie_id", cookie_id)).first();
+            Document document = collection.find(Filters.eq("cookie_secret", cookie_secret)).first();
             if (document != null){
-                log("ADMIN-COOKIE-VERIFIED", "Admin cookie verified (" + cookie_id + ")");
+                log("ADMIN-COOKIE-VERIFIED", "Admin cookie verified (" + cookie_secret + ")");
                 return 1;
             }
             else{
-                log("ADMIN-COOKIE-ERROR", "Admin cookie not found (" + cookie_id + ")");
+                log("ADMIN-COOKIE-ERROR", "Admin cookie not found (" + cookie_secret + ")");
                 return 0;
             }
         }catch(Exception ex){
@@ -198,19 +198,19 @@ import java.util.UUID;
 
     /**
      * Function for removing admin cookie
-     * @param cookie_id
+     * @param cookie_secret
      * @return int
      */
-    public int removeAdminCookie(String cookie_id){
+    public int removeAdminCookie(String cookie_secret){
         try{
             MongoCollection<Document> collection = getCollection("admin_cookies");
-            DeleteResult result = collection.deleteOne(Filters.eq("cookie_id", cookie_id));
+            DeleteResult result = collection.deleteOne(Filters.eq("cookie_secret", cookie_secret));
             if (result.getDeletedCount() == 1){
-                log("ADMIN-COOKIE-REMOVED", "Admin cookie removed (" + cookie_id + ")");
+                log("ADMIN-COOKIE-REMOVED", "Admin cookie removed (" + cookie_secret + ")");
                 return 1;
             }
             else{
-                log("ADMIN-COOKIE-ERROR", "Failed to remove admin cookie (" + cookie_id + ")");
+                log("ADMIN-COOKIE-ERROR", "Failed to remove admin cookie (" + cookie_secret + ")");
                 return 0;
             }
         }catch(Exception ex){
